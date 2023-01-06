@@ -11,13 +11,13 @@ namespace WindowsFormsApp1.DataModel
 {
     public class Patients
     {
-        [Key]
+    //    [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PatientID { get; set; }
-        [Required]
+  //      [Required]
         [MaxLength(50)]
         public string PatientSurname { get; set; }
-        [Required]
+   //     [Required]
         [MaxLength(50)]
         public string PatientName { get; set; }
         [MaxLength(50)]
@@ -34,8 +34,9 @@ namespace WindowsFormsApp1.DataModel
         public int PatientResultID { get; set; }
         public int PatientTimeOfHospitalization { get; set; }
         public bool COVID19 { get; set; }
-        public virtual ICollection<Patients> Patient { get; set; }
-        //public virtual ICollection<PatientResult> PatientResults { get; set; }
+
+        public virtual Department Department { get; set; }
+        public virtual PatientResult PatientResult { get; set; }
 
     }
 }

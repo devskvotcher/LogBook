@@ -199,6 +199,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddForm.Designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Department.cs" />
     <Compile Include="DataModel\LogBook.cs" />
     <Compile Include="DataModel\Patient.cs" />
@@ -209,18 +215,22 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202301032032380_Init.cs" />
-    <Compile Include="Migrations\202301032032380_Init.designer.cs">
-      <DependentUpon>202301032032380_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202301061557009_Init.cs" />
+    <Compile Include="Migrations\202301061557009_Init.designer.cs">
+      <DependentUpon>202301061557009_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\PatientDataGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301032032380_Init.resx">
-      <DependentUpon>202301032032380_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202301061557009_Init.resx">
+      <DependentUpon>202301061557009_Init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

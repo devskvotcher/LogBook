@@ -10,13 +10,13 @@ namespace WindowsFormsApp1.DataModel
 {
     public class Department
     {
-        [Key]
+    //    [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DepartmentID { get; set; }
-        [Required]
+  //      [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-        
-        public virtual ICollection<Department> Departments { get; set; }
+
+        public ICollection<Patients> Patients { get; set; }
     }
 }

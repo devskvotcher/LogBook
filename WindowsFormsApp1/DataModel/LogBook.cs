@@ -21,22 +21,24 @@ namespace WindowsFormsApp1.DataModel
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-         base.OnModelCreating(modelBuilder);
-         //   modelBuilder
-         //   .Entity<Patients>()
-         //   .HasOptional(d => d.DepartmentID);
-         //   .WithOne(p => p.Patient)
-         //   .HasForeignKey<Department>(p => p.DepartmentID);
-              
-         //          .WithRequiredPrincipal()
-         //          .Map(o => o.MapKey("DepartmentID"));
-         //    
-         //    modelBuilder.Entity<Patients>()
-         //       .HasRequired(p => p.PatientResult)
-         //       .WithRequiredDependent()
-         //       .Map(p => p.MapKey("PatientResultID"));
-         //   
+            //   modelBuilder.Entity <Patients> (b =>
+            //   {
+            //       b.HasKey(d => d.DepartmentID);                
+            //       b
+            //       .HasMany(d => d.Departments)
+            //       .WithOne(c => c.Patients);
+            //   });
 
+            modelBuilder.Entity<Patients>()
+                .HasKey(p => p.PatientID);
+
+            modelBuilder.Entity<Department>()
+                .HasMany(p => p.Patients)
+                .WithRequired(p => p.Department);
+
+            modelBuilder.Entity<PatientResult>()
+                .HasMany(p => p.Patients)
+                .WithRequired(p => p.PatientResult);
 
         }
         public DbSet<Patients> Patients { get; set; }
