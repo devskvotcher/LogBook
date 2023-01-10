@@ -19,10 +19,8 @@ namespace WindowsFormsApp1
 
         //---------------------------------------------------------------------------------------------------------
         Dictionary<string, int> keyValuePairsForDepartment = new Dictionary<string, int>();
-        List<string> keysForDepartment = new List<string>();
        //-----------------------------------Разобраться с дублированием дурацких словарей------------------------------------------------------------------------------------- 
         Dictionary<string, int> keyValuePairsForPatientResult = new Dictionary<string, int>();
-        List<string> keysForPatientResult = new List<string>();
         public AddForm(Form1 parentForm)
         {
             InitializeComponent();
@@ -42,11 +40,18 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            parentForm.Show();
-            Close();
+            parentForm.Show();            
 
             using (LogBook context = new LogBook())
             {
+              // Department department = new Department();
+              // department.Name = "876";
+              // PatientResult result1 = new PatientResult();
+              // result1.PatientResultName = "Dead";
+              // context.Departments.Add(department);
+              // context.PatientResults.Add(result1);
+              // context.SaveChanges();
+
                 Patients patient = new Patients();
              //    patient.PatientID = Patien; автоиндексация
                 patient.PatientSurname = PatientSurname.Text;
@@ -54,18 +59,40 @@ namespace WindowsFormsApp1
                 patient.PatientSecondName = PatientLastName.Text;
                 patient.PatientMedicalHistoryID = int.Parse(PatientHistory.Text);
                 patient.PatientAge = int.Parse(PatientAge.Text);
-                patient.PatientDeliveri = DateTime.ParseExact(PatientDeliviry.Text, "gdd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-                patient.DepartmentID = GetDepartment.SelectedIndex;
-                patient.PatientTransferTime = DateTime.ParseExact(PatientDeliviry.Text, "gdd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-                patient.PatientResultID = PatientResult.SelectedIndex;
-             //  patient.PatientTimeOfHospitalization = 25;
+                patient.PatientDeliveri = PatientDeliviry.Value;
+                               
+                int depId = GetIndexForDepartment();
+                Department dep = (from d in context.Departments 
+                                  where d.DepartmentID == depId
+                                  select d).FirstOrDefault();
+        
+                dep.Patients.Add(patient);
+
+                int resultId = GetIndexForPatientResult();
+                PatientResult result = (from d in context.PatientResults
+                                        where d.PatientResultID == resultId
+                                        select d).FirstOrDefault();
+
+                result.Patients.Add(patient);
+
+                patient.PatientTransferTime = PatientTransferTime.Value;
+                patient.PatientTimeOfHospitalization = patient.PatientTransferTime.Hour - patient.PatientDeliveri.Hour;
                 patient.COVID19 = GetCOVID19(COVID19.SelectedIndex);
-                context.Patients.Add(patient);
+                //context.Patients.Add(patient);
+                // MessageBox.Show($"Ф: {patient.PatientSurname}, И {patient.PatientName}, ИБ {patient.PatientMedicalHistoryID}, В {patient.PatientAge}, DD {patient.PatientDeliveri}, PT{patient.PatientTimeOfHospitalization}");
+
+                MessageBox.Show($"{patient.PatientTransferTime.Hour - patient.PatientDeliveri.Hour}");
+                context.SaveChanges();
+
             }
+            MessageBox.Show("Пациент успешно добавлен");
+            parentForm.UpdateLogBook();
+            Close();
         }
 
         private void GetDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var r = GetDepartment.SelectedItem.ToString();
 
             GetIndexForDepartment();            
         }
@@ -85,7 +112,7 @@ namespace WindowsFormsApp1
                     keyValuePairsForDepartment[item.Name] = item.DepartmentID;
                 }
             }
-            keysForDepartment = keyValuePairsForDepartment.Keys.ToList();
+            var keysForDepartment = keyValuePairsForDepartment.Keys.ToList();
 
             foreach (var item in keysForDepartment)
             {
@@ -104,7 +131,7 @@ namespace WindowsFormsApp1
                     keyValuePairsForPatientResult[item.PatientResultName] = item.PatientResultID;
                 }
             }
-            keysForPatientResult = keyValuePairsForPatientResult.Keys.ToList();
+            var keysForPatientResult = keyValuePairsForPatientResult.Keys.ToList();
 
             foreach (var item in keysForPatientResult)
             {
@@ -113,13 +140,13 @@ namespace WindowsFormsApp1
         }
         private int GetIndexForDepartment()
         {
-            var id = keyValuePairsForDepartment[keysForDepartment[GetDepartment.SelectedIndex]];
+            var id = keyValuePairsForDepartment[GetDepartment.SelectedItem.ToString()];
             
             return id;
         }
         private int GetIndexForPatientResult()
         {
-            var id = keyValuePairsForPatientResult[keysForPatientResult[GetDepartment.SelectedIndex]];
+            var id = keyValuePairsForPatientResult[PatientResult.SelectedItem.ToString()];
 
             return id;
         }
@@ -136,14 +163,7 @@ namespace WindowsFormsApp1
         }
         private bool GetCOVID19(int selectedIndexChanged)
         {
-            if(COVID19.SelectedIndex == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return COVID19.SelectedIndex == 1;
         }
 
         private void PatientSurname_TextChanged(object sender, EventArgs e)
@@ -177,6 +197,11 @@ namespace WindowsFormsApp1
         }
 
         private void PatientTransferTime_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddForm_Load(object sender, EventArgs e)
         {
 
         }

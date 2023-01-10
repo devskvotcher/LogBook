@@ -17,6 +17,6 @@ namespace WindowsFormsApp1.DataModel
         [MaxLength(30)]
         public string Name { get; set; }
 
-        public ICollection<Patients> Patients { get; set; }
+        public ICollection<Patients> Patients { get; set; }  = new List<Patients>();
     }
 }

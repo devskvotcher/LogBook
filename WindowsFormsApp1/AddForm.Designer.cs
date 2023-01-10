@@ -39,6 +39,7 @@
             this.PatientTransferTime = new System.Windows.Forms.DateTimePicker();
             this.PatientResult = new System.Windows.Forms.ComboBox();
             this.COVID19 = new System.Windows.Forms.ComboBox();
+            this.sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             this.SuspendLayout();
             // 
             // button1
@@ -62,6 +63,8 @@
             // 
             // PatientDeliviry
             // 
+            this.PatientDeliviry.CustomFormat = "dd-MM-yyyy HH:mm";
+            this.PatientDeliviry.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.PatientDeliviry.Location = new System.Drawing.Point(12, 237);
             this.PatientDeliviry.Name = "PatientDeliviry";
             this.PatientDeliviry.Size = new System.Drawing.Size(187, 20);
@@ -110,6 +113,8 @@
             // 
             // PatientTransferTime
             // 
+            this.PatientTransferTime.CustomFormat = "dd-MM-yyyy HH:mm";
+            this.PatientTransferTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.PatientTransferTime.Location = new System.Drawing.Point(12, 323);
             this.PatientTransferTime.Name = "PatientTransferTime";
             this.PatientTransferTime.Size = new System.Drawing.Size(187, 20);
@@ -134,6 +139,11 @@
             this.COVID19.TabIndex = 10;
             this.COVID19.SelectedIndexChanged += new System.EventHandler(this.COVID19_SelectedIndexChanged);
             // 
+            // sqlCommand1
+            // 
+            this.sqlCommand1.CommandTimeout = 30;
+            this.sqlCommand1.EnableOptimizedParameterBinding = false;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +162,7 @@
             this.Controls.Add(this.button1);
             this.Name = "AddForm";
             this.Text = "Добавление пациента";
+            this.Load += new System.EventHandler(this.AddForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,5 +181,6 @@
         private System.Windows.Forms.DateTimePicker PatientTransferTime;
         private System.Windows.Forms.ComboBox PatientResult;
         private System.Windows.Forms.ComboBox COVID19;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
     }
 }

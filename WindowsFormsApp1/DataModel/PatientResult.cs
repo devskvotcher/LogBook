@@ -15,6 +15,6 @@ namespace WindowsFormsApp1.DataModel
         public int PatientResultID { get; set; }
         [Required]
         public string PatientResultName { get; set; }
-        public ICollection<Patients> Patients { get; set; }
+        public ICollection<Patients> Patients { get; set; } = new List<Patients>();
     }
 }

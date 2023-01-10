@@ -28,7 +28,7 @@ namespace WindowsFormsApp1.DataModel
             //       .HasMany(d => d.Departments)
             //       .WithOne(c => c.Patients);
             //   });
-
+            
             modelBuilder.Entity<Patients>()
                 .HasKey(p => p.PatientID);
 
